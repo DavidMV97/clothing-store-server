@@ -1,0 +1,26 @@
+{
+  "name": "clothing-store-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidMV97/clothing-store-server.git"
+  },
+  "author": "Germán David",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidMV97/clothing-store-server/issues"
+  },
+  "homepage": "https://github.com/DavidMV97/clothing-store-server#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
