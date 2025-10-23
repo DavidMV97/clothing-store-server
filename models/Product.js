@@ -10,6 +10,8 @@ const productsSchema = new Schema({
   category: {
     type: String,
     trim: true,
+    enum: ['Casual', 'Formal', 'Sporty', 'Urban', 'Elegant', 'Vintage'],
+    required: true
   },
   price: {
     type: Number,

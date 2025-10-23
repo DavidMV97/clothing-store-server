@@ -17,7 +17,30 @@ export const newProduct = async (req, res, next) => {
 
 export const showProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({});
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    
+    // Filter by category
+    if (req.query.category) {
+      filter.category = req.query.category;
+    } 
+    
+    // Filter by name (case insensitive search)
+    if (req.query.search) {
+      filter.name = { $regex: req.query.search, $options: 'i' };
+    }
+
+    // Get total count for pagination
+    const total = await Product.countDocuments(filter);
+
+    // Get products with filters and pagination
+    const products = await Product.find(filter)
+      .skip(skip)
+      .limit(limit);
+
     const host = `${req.protocol}://${req.get('host')}`;
     const productsWithUrls = products.map((p) => {
       const productObj = p.toObject();
@@ -28,9 +51,19 @@ export const showProducts = async (req, res, next) => {
       }
       return productObj;
     });
-    res.json(productsWithUrls);
+
+    res.json({
+      products: productsWithUrls,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        itemsPerPage: limit
+      }
+    });
   } catch (error) {
     console.error(colors.red.bold('Error', error));
+    res.status(500).json({ message: 'Error retrieving products' });
   }
 };
 
