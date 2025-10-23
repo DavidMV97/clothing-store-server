@@ -46,6 +46,8 @@ app.use((err, req, res, next) => {
   let message = err.message;
 
   if (err.name === 'ValidationError') {
+    console.log('entra en validacion');
+    
     statusCode = 400; // Bad Request
     message = Object.values(err.errors).map(e => e.message).join(', ');
   }
