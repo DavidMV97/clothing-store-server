@@ -27,6 +27,7 @@ const __dirname = dirname(__filename);
 
 
 app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
+app.use('/swagger-assets', express.static(path.resolve(__dirname, 'public', 'swagger-assets')));
 
 
 app.get('/', (req, res) => {
@@ -34,7 +35,12 @@ app.get('/', (req, res) => {
 });
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const swaggerUiOptions = {
+  customfavIcon: '/swagger-assets/favicon.ico',
+  customSiteTitle: 'Clothing Store API Docs'
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 
 
 app.use('/api', router);
