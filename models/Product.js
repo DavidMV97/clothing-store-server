@@ -38,6 +38,8 @@ const productsSchema = new Schema({
     type: String,
     required: [true, 'Product image is required']
   },
+}, {
+  timestamps: { createdAt: 'creationDate', updatedAt: 'updatedAt' }
 });
 
 const Product = model('Products', productsSchema);

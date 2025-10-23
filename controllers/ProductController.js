@@ -42,6 +42,7 @@ export const showProducts = async (req, res, next) => {
 
     // Get products with filters and pagination
     const products = await Product.find(filter)
+      .sort({ creationDate: -1, _id: -1 })
       .skip(skip)
       .limit(limit);
 

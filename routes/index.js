@@ -61,6 +61,46 @@ const router = Router();
  *     responses:
  *       201:
  *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 category:
+ *                   type: string
+ *                 price:
+ *                   type: number
+ *                 value:
+ *                   type: number
+ *                 stock:
+ *                   type: number
+ *                 description:
+ *                   type: string
+ *                 productImage:
+ *                   type: string
+ *                 creationDate:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *             examples:
+ *               createdProduct:
+ *                 value:
+ *                   _id: "650a1f2e5b6c7d8f9a0b1c2d"
+ *                   name: "Soft cotton t-shirt"
+ *                   category: "Casual"
+ *                   price: 29.99
+ *                   value: 10.99
+ *                   stock: 100
+ *                   description: "Soft cotton t-shirt"
+ *                   productImage: "image-file.jpg"
+ *                   creationDate: "2025-10-23T20:04:44.267Z"
+ *                   updatedAt: "2025-10-23T20:04:44.267Z"
  *       400:
  *         description: validation error
  *       500:
@@ -129,6 +169,12 @@ router.post('/products',
  *                       productImageUrl:
  *                         type: string
  *                         nullable: true
+ *                       creationDate:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
  *                 pagination:
  *                   type: object
  *                   properties:
@@ -154,6 +200,8 @@ router.post('/products',
  *                       productImage: "LfCksA9tL.jpeg"
  *                       __v: 0
  *                       productImageUrl: "http://localhost:3000/uploads/LfCksA9tL.jpeg"
+ *                       creationDate: "2025-10-23T20:04:44.267Z"
+ *                       updatedAt: "2025-10-23T20:04:44.267Z"
  *                     - _id: "68fa690c7d34efa7efc496e3"
  *                       name: "Soft cotton t-shirt 2"
  *                       category: "Casual"
@@ -216,6 +264,12 @@ router.get('/products', showProducts);
  *                 productImageUrl:
  *                   type: string
  *                   nullable: true
+ *                 creationDate:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
  *             examples:
  *               product:
  *                 value:
@@ -228,6 +282,8 @@ router.get('/products', showProducts);
  *                   description: "Soft cotton t-shirt"
  *                   productImage: "image-file.jpg"
  *                   productImageUrl: "http://localhost:3000/uploads/image-file.jpg"
+ *                   creationDate: "2025-10-23T20:04:44.267Z"
+ *                   updatedAt: "2025-10-23T20:04:44.267Z"
  *       404:
  *         description: Product not found
  *       500:
