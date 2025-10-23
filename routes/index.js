@@ -17,31 +17,52 @@ const router = Router();
  *         multipart/form-data:
  *           schema:
  *             type: object
+ *             required:
+ *               - name
+ *               - category
+ *               - price
+ *               - value
+ *               - stock
+ *               - description
+ *               - productImage
  *             properties:
  *               name:
  *                 type: string
  *                 example: "Soft cotton t-shirt"
+ *                 description: "Product name (required)"
  *               category:
  *                 type: string
  *                 enum: [Casual, Formal, Sporty, Urban, Elegant, Vintage]
  *                 example: "Casual"
+ *                 description: "Product category (required)"
  *               price:
  *                 type: number
  *                 example: 29.99
+ *                 minimum: 0
+ *                 description: "Product price (required)"
+ *               value:
+ *                 type: number
+ *                 example: 10.99
+ *                 minimum: 0
+ *                 description: "Product value (required)"               
  *               stock:
  *                 type: integer
  *                 example: 100
+ *                 minimum: 0
+ *                 description: "Product stock quantity (required)"
  *               description:
  *                 type: string
  *                 example: "Soft cotton t-shirt"
+ *                 description: "Product description (required)"
  *               productImage:
  *                 type: string
  *                 format: binary
+ *                 description: "Product image file (required)"
  *     responses:
  *       201:
  *         description: Product created successfully
  *       400:
- *         description: Invalid category or validation error
+ *         description: validation error
  *       500:
  *         description: Server error
  */
@@ -123,22 +144,46 @@ router.get('/products/:id', showProductbyId);
  *         multipart/form-data:
  *           schema:
  *             type: object
+ *             required:
+ *               - name
+ *               - category
+ *               - price
+ *               - value
+ *               - stock
+ *               - description
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "Soft cotton t-shirt"
+ *                 description: "Product name (required)"
  *               category:
  *                 type: string
+ *                 enum: [Casual, Formal, Sporty, Urban, Elegant, Vintage]
+ *                 example: "Casual"
+ *                 description: "Product category (required)"
  *               price:
  *                 type: number
+ *                 minimum: 0
+ *                 example: 29.99
+ *                 description: "Product price (required)"
  *               value:
  *                 type: number
+ *                 minimum: 0
+ *                 example: 10.99
+ *                 description: "Product value (required)"
  *               stock:
  *                 type: number
+ *                 minimum: 0
+ *                 example: 100
+ *                 description: "Product stock quantity (required)"
  *               description:
  *                 type: string
+ *                 example: "Soft cotton t-shirt"
+ *                 description: "Product description (required)"
  *               productImage:
  *                 type: string
  *                 format: binary
+ *                 description: "Product image file"
  *     responses:
  *       200:
  *         description: Product updated

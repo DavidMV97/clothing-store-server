@@ -9,10 +9,11 @@ export const newProduct = async (req, res, next) => {
     if (req.file?.filename) {
       product.productImage = req.file.filename;
     }
+
     await product.save();
-    return res.status(201).json({ message: 'New product created' });
+    return res.status(201).json({ message: 'Product created successfully' });
   } catch (error) {
-    console.error(colors.red.bold('Error creating the product:', error));
+    console.error(colors.red.bold('Error creating the product:', error));  
     next(error);
   }
 };
@@ -94,9 +95,8 @@ export const showProductbyId = async (req, res, next) => {
 
 export const updateProduct = async (req, res, next) => {
   try {
-
     let newProduct = req.body;
-    
+
     if (req.file) {
       newProduct.productImage = req.file.filename;
     } else {
@@ -107,7 +107,7 @@ export const updateProduct = async (req, res, next) => {
     let product = await Product.findOneAndUpdate(
       { _id: req.params.id },
       newProduct,
-      { new: true }
+      { new: true, runValidators: true }
     );
     res.json({ message: 'Product updated', product });
   } catch (error) {
