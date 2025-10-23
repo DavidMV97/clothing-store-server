@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { newProduct, showProducts, showProductbyId, updateProduct, deleteProduct } from '../controllers/ProductController.js';
 import { uploadFile } from '../middleware/uploadFile.js';
+import { getCategories } from '../controllers/CategoryController.js';
 
 const router = Router();
 
@@ -376,5 +377,7 @@ router.put('/products/:id', uploadFile, updateProduct);
  *         description: Product deleted
  */
 router.delete('/products/:id', deleteProduct);
+
+router.get('/categories', getCategories)
 
 export default router;
