@@ -18,7 +18,17 @@ export const newProduct = async (req, res, next) => {
 export const showProducts = async (req, res, next) => {
   try {
     const products = await Product.find({});
-    res.json(products);
+    const host = `${req.protocol}://${req.get('host')}`;
+    const productsWithUrls = products.map((p) => {
+      const productObj = p.toObject();
+      if (productObj.productImage) {
+        productObj.productImageUrl = `${host}/uploads/${productObj.productImage}`;
+      } else {
+        productObj.productImageUrl = null;
+      }
+      return productObj;
+    });
+    res.json(productsWithUrls);
   } catch (error) {
     console.error(colors.red.bold('Error', error));
   }
@@ -31,7 +41,14 @@ export const showProductbyId = async (req, res, next) => {
       res.json({ message: 'Product not found' });
       return next();
     }
-    res.json(product);
+    const host = `${req.protocol}://${req.get('host')}`;
+    const productObj = product.toObject();
+    if (productObj.productImage) {
+      productObj.productImageUrl = `${host}/uploads/${productObj.productImage}`;
+    } else {
+      productObj.productImageUrl = null;
+    }
+    res.json(productObj);
   } catch (error) {
     console.error(colors.red.bold('Error', error));
   }
