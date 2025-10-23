@@ -7,8 +7,22 @@ const productsSchema = new Schema({
     type: String,
     trim: true,
   },
+  category: {
+    type: String,
+    trim: true,
+  },
   price: {
     type: Number,
+  },
+  value: {
+    type: Number,
+  },
+  stock: {
+    type: Number,
+  },
+  description: {
+    type: String,
+    trim: true,
   },
   productImage: {
     type: String,
