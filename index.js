@@ -1,13 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import router from './routes/index.js';
-import path from 'path';
+import path, { dirname } from 'path';
 import { swaggerUi, swaggerSpec } from './swagger.js';
 import { connectDB } from './config/db.js';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-
+import fs from 'fs';
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -21,12 +19,19 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:4200' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const uploadsDir = path.resolve(__dirname, 'uploads');
 
-app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log('"Uploads" folder created automatically');
+}
+
+app.use('/uploads', express.static(uploadsDir));
+
+
 app.use('/swagger-assets', express.static(path.resolve(__dirname, 'public', 'swagger-assets')));
 
 
@@ -53,7 +58,7 @@ app.use((err, req, res, next) => {
 
   if (err.name === 'ValidationError') {
     console.log('entra en validacion');
-    
+
     statusCode = 400; // Bad Request
     message = Object.values(err.errors).map(e => e.message).join(', ');
   }
